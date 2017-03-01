@@ -1,12 +1,10 @@
-let express = require('express');
 let request = require('request');
 let fs = require('fs');
 let lodash = require('lodash')
 let cheerio = require('cheerio');
-let app = express();
+import { cleanData } from './cleanData.js'
 
   var url = 'http://ire.org/conferences/nicar2017/schedule/';
-var link;
 
   request(url, function(error, response, html) {
     if(!error && response.statusCode == 200) {
@@ -18,7 +16,8 @@ var link;
 		    	link: "",
 		    	speakers: "",
 		    	descriptions: "",
-		    	time: ""
+		    	startTime: "",
+          endTime: ""
 		    }
 
 				var title = $(this).find('h3').text()
@@ -29,12 +28,16 @@ var link;
 				var description = $(this).find('p').text();
 				description = description.split(speakers)[1].replace("Register now!", "");
 				var time = $(this).next().text().replace(/\s+/g, ' ')
+        time = cleanData().init(time)
 
 				json.title = title;
 				json.link = link;
 				json.speakers = speakers.split("Speakers: ")[1];
 				json.descriptions = description;
-				json.time = time;
+				json.startTime = time.startTime;
+				json.endTime = time.endTime;
+        json.venue = time.venue;
+
 
 				schedule.push(json)
 			})
