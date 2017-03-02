@@ -18,9 +18,9 @@ import { cleanData } from './cleanData.js'
         '03/05/2017'
       ]
       var $ = cheerio.load(html);
-      $('listview').each(function(i, elem) {
+      $('.listview').each(function(i, elem) {
         //events on a single day//
-        $(this).each(function(index) {
+        $('.col-60').each(function() {
           var json = {
             title: "",
             link: "",
@@ -29,11 +29,10 @@ import { cleanData } from './cleanData.js'
             startTime: "",
             endTime: ""
           }
+          //console.log($(elem).find('h3').text())
           var title = $(this).find('h3').text()
-          var link = $(this).find('a')
-          link = link[0].attribs.href;
-          var speakers = $(this).find('p')[0]
-          speakers = $(speakers).text()
+          var link = $(this).find('a').attr('href')
+          var speakers = $($(this).find('p')[0]).text()
           var description = $(this).find('p').text();
           description = description.split(speakers)[1].replace("Register now!", "");
           var time = $(this).next().text().replace(/\s+/g, ' ')
@@ -50,7 +49,8 @@ import { cleanData } from './cleanData.js'
 
           schedule.push(json)
         })
-        dayCounter++
+      dayCounter++
+
       })
 		  fs.writeFile('output.json', JSON.stringify(schedule, null, 2), function(err) {
         if(err) throw err

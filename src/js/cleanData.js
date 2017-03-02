@@ -35,7 +35,6 @@ var cleanData = function () {
   }
 
   function getTime(timeFrame, day) {
-    //console.log(timeFrame)
     var timeArray = timeFrame.replace(/\s/g, '').replace(/\./g, '').split('-');
     //getFormat//
     var startTimeFormat = getFormat(timeArray[0])
@@ -51,9 +50,17 @@ var cleanData = function () {
   function getFormat(timeString) {
     var time = timeString.trim().split(':')
     if(time.length > 1) {
-      return 'MM/DD/YY' + ' ' + 'h' + ':' + 'm' + ' ' + 'a'
+      var format = [
+        "MM/DD/YYYY" + " " + "h:ma",
+        "YYYY/MM/DD" + " " + "h:ma"
+      ]
+      return format
     } else {
-      return 'MM/DD/YY' + ' ' + 'h' + ' ' + 'a'
+      var format = [
+        "MM/DD/YYYY" + " " + "ha",
+        "YYYY/MM/DD" + " " + "ha"
+      ]
+      return format
     }
   }
 
