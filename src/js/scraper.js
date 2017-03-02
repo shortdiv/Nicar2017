@@ -9,6 +9,7 @@ import { cleanData } from './cleanData.js'
   request(url, function(error, response, html) {
     if(!error && response.statusCode == 200) {
       var dayCounter = 0;
+      var counter = 0;
       var schedule = [];
       var dates = [
         '03/01/2017',
@@ -18,9 +19,18 @@ import { cleanData } from './cleanData.js'
         '03/05/2017'
       ]
       var $ = cheerio.load(html);
-      $('.listview').each(function(i, elem) {
-        //events on a single day//
         $('.col-60').each(function() {
+          if(counter === 4) {
+            dayCounter++
+          } else if(counter === 80) {
+            dayCounter++
+          } else if(counter === 146) {
+            dayCounter++
+          } else if(counter === 219) {
+            dayCounter++
+          } else if(counter === 241) {
+            dayCounter++
+          }
           var json = {
             title: "",
             link: "",
@@ -48,10 +58,9 @@ import { cleanData } from './cleanData.js'
           json.venue = time.venue;
 
           schedule.push(json)
+          counter++
         })
-      dayCounter++
 
-      })
 		  fs.writeFile('output.json', JSON.stringify(schedule, null, 2), function(err) {
         if(err) throw err
       })
