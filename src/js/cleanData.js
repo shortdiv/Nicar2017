@@ -37,6 +37,15 @@ var cleanData = function () {
     var timeArray = timeFrame.replace(/\s/g, '').replace(/\./g, '').split('-');
     var startTime = timeArray[0]
     var endTime = timeArray[1]
+    if ((startTime.split(':').length <= 1) && (endTime.split(':').length <= 1)) {
+      startTime = startTime.slice(0,1) + ":00" + startTime.slice(1, timeArray.length+1)
+      endTime = endTime.slice(0,1) + ":00" + endTime.slice(1, timeArray.length+1)
+    } else if(startTime.split(':').length <= 1) {
+      startTime = startTime.slice(0,1) + ":00" + startTime.slice(1, timeArray.length+1)
+    } else if(endTime.split(':').length <= 1) {
+      endTime = endTime.slice(0,1) + ":00" + endTime.slice(1, timeArray.length+1)
+    }
+
     return {
       startTime: startTime,
       endTime: endTime
