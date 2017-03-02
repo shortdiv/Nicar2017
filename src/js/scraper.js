@@ -36,6 +36,7 @@ import { cleanData } from './cleanData.js'
             link: "",
             speakers: "",
             descriptions: "",
+            day: "",
             startTime: "",
             endTime: ""
           }
@@ -53,6 +54,7 @@ import { cleanData } from './cleanData.js'
           json.link = link;
           json.speakers = speakers.split("Speakers: ")[1];
           json.descriptions = description;
+          json.day = day;
           json.startTime = time.startTime;
           json.endTime = time.endTime;
           json.venue = time.venue;

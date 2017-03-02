@@ -1,5 +1,4 @@
 var fs = require('fs');
-var moment = require('moment');
 
 var cleanData = function () {
   function init(time, day) {
@@ -36,11 +35,8 @@ var cleanData = function () {
 
   function getTime(timeFrame, day) {
     var timeArray = timeFrame.replace(/\s/g, '').replace(/\./g, '').split('-');
-    //getFormat//
-    var startTimeFormat = getFormat(timeArray[0])
-    var endTimeFormat = getFormat(timeArray[1])
-    var startTime = moment(day + " " + timeArray[0], startTimeFormat)
-    var endTime = moment(day + " " + timeArray[1], endTimeFormat)
+    var startTime = timeArray[0]
+    var endTime = timeArray[1]
     return {
       startTime: startTime,
       endTime: endTime

@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/js/server.js',
+  entry: './src/js/scraper.js',
   output: {
 		filename: './bundle.js'
   },
