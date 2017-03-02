@@ -9,6 +9,8 @@ var cleanData = function () {
     time = time.replace(" ", "")
     if(!Number.isNaN(parseInt(time[0]))) {
       newTime = time.slice(1, time.length)
+    } else if(!Number.isNaN(parseInt(time[6]))) {
+      newTime = time.slice(23, time.length)
     } else {
       newTime = time
     }
@@ -17,8 +19,12 @@ var cleanData = function () {
     if(extraChars != null) {
       var extraChar = extraChars[0].slice(0,2)
       timePeriod = timePeriod.replace(extraChar, "").trim()
+      if(timePeriod[0] === '/') {
+        timePeriod = timePeriod.slice(4, timePeriod.length)
+      }
     }
     var venue = time.replace(timePeriod, "")
+
     timePeriod = getTime(timePeriod);
 
     return {
@@ -29,11 +35,11 @@ var cleanData = function () {
   }
 
   function getTime(timeFrame) {
-    var timeArray = timeFrame.replace(/\s/g, '').replace(/\s/g, '').split('-');
+    //console.log(timeFrame)
+    var timeArray = timeFrame.replace(/\s/g, '').replace(/\./g, '').split('-');
     //getFormat//
     var startTimeFormat = getFormat(timeArray[0])
     var endTimeFormat = getFormat(timeArray[1])
-    console.log(timeArray + 'start' + startTimeFormat + ' end ' + endTimeFormat )
     var startTime = moment(timeArray[0], startTimeFormat)
     var endTime = moment(timeArray[1], endTimeFormat)
     return {
