@@ -2,7 +2,7 @@ var fs = require('fs');
 var moment = require('moment');
 
 var cleanData = function () {
-  function init(time) {
+  function init(time, day) {
     var newTime;
     var grabTime = /(?:\d.+[\s])?(?:a.m.|p.m.)/;
     var removeExtraNum = /^.*?\d\s\d/
@@ -23,9 +23,9 @@ var cleanData = function () {
         timePeriod = timePeriod.slice(4, timePeriod.length)
       }
     }
-    var venue = time.replace(timePeriod, "")
+    var venue = time.replace(timePeriod, "").trim()
 
-    timePeriod = getTime(timePeriod);
+    timePeriod = getTime(timePeriod, day);
 
     return {
       venue: venue,
@@ -34,14 +34,14 @@ var cleanData = function () {
     }
   }
 
-  function getTime(timeFrame) {
+  function getTime(timeFrame, day) {
     //console.log(timeFrame)
     var timeArray = timeFrame.replace(/\s/g, '').replace(/\./g, '').split('-');
     //getFormat//
     var startTimeFormat = getFormat(timeArray[0])
     var endTimeFormat = getFormat(timeArray[1])
-    var startTime = moment(timeArray[0], startTimeFormat)
-    var endTime = moment(timeArray[1], endTimeFormat)
+    var startTime = moment(day + " " + timeArray[0], startTimeFormat)
+    var endTime = moment(day + " " + timeArray[1], endTimeFormat)
     return {
       startTime: startTime,
       endTime: endTime
@@ -51,9 +51,9 @@ var cleanData = function () {
   function getFormat(timeString) {
     var time = timeString.trim().split(':')
     if(time.length > 1) {
-      return 'h' + ':' + 'm' + ' ' + 'a'
+      return 'MM/DD/YY' + ' ' + 'h' + ':' + 'm' + ' ' + 'a'
     } else {
-      return 'h' + ' ' + 'a'
+      return 'MM/DD/YY' + ' ' + 'h' + ' ' + 'a'
     }
   }
 
